@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CoreEscuela.Entidades;
 using CoreEscuela.Util;
 using static System.Console;
@@ -14,45 +15,34 @@ namespace CoreEscuela
             engine.Inicializar();
             Printer.WriteTitle("BIENVENIDOS A LA ESCUELA");
             //Printer.Beep(10000, 500, 10);
-            imprimirCursosEscuela(engine.Escuela);   
+            imprimirCursosEscuela(engine.Escuela);  
 
-            Printer.DrawLine(20);
-            Printer.DrawLine(20);
-            Printer.DrawLine(20);
-            Printer.WriteTitle("Pruebas de polimorfismo"); 
+            var listaObjetos = engine.GetObjetoEscuela(); 
 
-            var alumnoTest = new Alumno{Nombre = "Claire Underwood"};
+            //engine.Escuela.LimpiarLugar();           
+            /*var listaIlugar = from obj in listaObjetos
+                              where obj is ILugar
+                              select (ILugar)obj;*/
             
-            Printer.WriteTitle("Alumno");
-            WriteLine($"Alumno: {alumnoTest.Nombre}");
-            WriteLine($"Alumno: {alumnoTest.UniqueId}");
-            WriteLine($"Alumno: {alumnoTest.GetType()}");
+            Dictionary<int, string> diccionario= new Dictionary<int, string>();
+            diccionario.Add(10, "Jhon Alzate");
+            diccionario.Add(23, "Yesica Herrera");
 
-            ObjetoEscuelaBase ob = alumnoTest;
-            Printer.WriteTitle("ObjetoEscuela");
-            WriteLine($"Alumno: {ob.Nombre}");
-            WriteLine($"Alumno: {ob.UniqueId}");
-            WriteLine($"Alumno: {ob.GetType()}");
+            foreach (var keyValPair in diccionario)
+            {
+                WriteLine($"Key: {keyValPair.Key} Valor: {keyValPair.Value}");
+            }
 
-            var objDummy = new ObjetoEscuelaBase(){Nombre = "Frank Underwood"};
-            Printer.WriteTitle("ObjetoEscuela");
-            WriteLine($"Alumno: {objDummy.Nombre}");
-            WriteLine($"Alumno: {objDummy.UniqueId}");
-            WriteLine($"Alumno: {objDummy.GetType()}");
+            Printer.WriteTitle("Acceso a Dicionario");
+            diccionario[0] = "Pekerman";
+            WriteLine(diccionario[0]);
 
-            var evaluacion = new Evaluacion(){Nombre = "Evaluación de math", Nota = 4.5f};
-            Printer.WriteTitle("Evaluación");
-            WriteLine($"Evaluación: {evaluacion.Nombre}");
-            WriteLine($"Evaluación: {evaluacion.Nota}");
-            WriteLine($"Evaluación: {evaluacion.UniqueId}");
-            WriteLine($"Evaluación: {evaluacion.GetType()}");
-
-            ob = evaluacion;
-            Printer.WriteTitle("ObjetoEscuela");
-            WriteLine($"Alumno: {ob.Nombre}");
-            WriteLine($"Alumno: {ob.UniqueId}");
-            WriteLine($"Alumno: {ob.GetType()}");
-
+            Printer.WriteTitle("Otro diccionario");
+            var dic = new Dictionary<string, string>();
+            dic["Luna"] = "Cuerpo celeste que gira alrededor de la tierra";
+            WriteLine(dic["Luna"]);
+            dic["Luna"] = "La protagonista de soy Luna";
+            WriteLine(dic["Luna"]);
         }
         
         private static void imprimirCursosEscuela(Escuela escuela)
